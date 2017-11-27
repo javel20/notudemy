@@ -12,16 +12,18 @@
 
                     <div class="panel-body">
 
-                        <div class="form-group">
+                        <div class="form-group {{ $errors->has('recipient_id') ? 'has-error' : '' }}">
                             <select name="recipient_id" id="" class="form-control">
                                 <option value="">Seleccione el usuario</option>
                                 @foreach($users as $user)
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
                             </select>
+                            {!! $errors->first('recipient_id',"<span class=help-block>:message</span>") !!}
                         </div>
-                        <div class="form-group">
+                        <div class="form-group {{ $errors->has('body') ? 'has-error' : '' }}">
                             <textarea name="body" id="" cols="30" rows="10" class="form-control" placeholder="Escribe aquí..."></textarea>
+                            {!! $errors->first('body',"<span class=help-block>:message</span>") !!}
                         </div>
                         
                         <div class="form-group">

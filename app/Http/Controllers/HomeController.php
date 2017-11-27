@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Notifications\MessageSent;
 use App\User;
 use App\Message;
 
@@ -31,11 +32,21 @@ class HomeController extends Controller
     }
 
     public function store(Request $request){
-        Message::create([
+
+        $this->validate($request, [
+            'body' => 'required',
+            'recipient_id' => 'required|exists:users,id'
+        ]);
+
+        $message = Message::create([
             'sender_id' => auth()->id(),
             'recipient_id' => $request->recipient_id,
             'body' => $request->body,
         ]);
+
+        $recipient = User::find($request->recipient_id);
+        $recipient->notify(new MessageSent($message));
+
         //dd($request->all());
         return back()->with('flash','Tu mensaje fue enviado');
     }
