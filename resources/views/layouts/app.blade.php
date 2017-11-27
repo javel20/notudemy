@@ -49,9 +49,9 @@
 
                         <li><a href="/home">Enviar mensaje</a></li>
 
-                        <li><a href="">Notificaciones
+                        <li><a href="{{ route('notifications.index')}}">Notificaciones
                         
-                                @if($count = Auth::user()->notifications->count())
+                                @if($count = Auth::user()->unreadNotifications->count())
                                     <span class="badge">{{ $count }}</span>
                                 @endif
 
