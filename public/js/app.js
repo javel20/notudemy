@@ -42900,10 +42900,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         dropdownClasses: function dropdownClasses() {
-            return ['dropdown', $this.isDropdownOpen ? 'open' : ''];
+            return ['dropdown', this.isDropdownOpen ? 'open' : ''];
         },
         linkToNotifications: function linkToNotifications() {
-            return $this.notifications.length ? "#" : "/notificaciones";
+            return this.notifications.length ? "#" : "/notificaciones";
         }
     }
 });
@@ -42921,7 +42921,7 @@ var render = function() {
       "a",
       {
         staticClass: "dropdown-toogle",
-        attrs: { href: _vm.linkToNotifications, "data-toggle": "dropdown" },
+        attrs: { href: _vm.linkToNotifications },
         on: {
           click: function($event) {
             _vm.isDropdownOpen = !_vm.isDropdownOpen

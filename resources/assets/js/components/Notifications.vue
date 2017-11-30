@@ -1,7 +1,7 @@
 <template>
 
     <li :class="dropdownClasses">
-        <a @click="isDropdownOpen = ! isDropdownOpen" :href="linkToNotifications" class="dropdown-toogle" data-toggle="dropdown">
+        <a @click="isDropdownOpen = ! isDropdownOpen" :href="linkToNotifications" class="dropdown-toogle">
                         
                 <span class="glyphicon glyphicon-bell"></span>
                 <span v-if="notifications.length" class="badge" v-text="notifications.length"></span>
@@ -39,17 +39,17 @@
                     });
             },
             markAllAsRead(){
-                this.notifications.forEach(notification =>{
+                this.notifications.forEach(notification => {
                     this.markAsRead(notification);
                 });
             },
         },
         computed: {
             dropdownClasses(){
-                return ['dropdown', $this.isDropdownOpen ? 'open' : ''];
+                return ['dropdown', this.isDropdownOpen ? 'open' : ''];
             },
             linkToNotifications(){
-                return $this.notifications.length ? "#" : "/notificaciones";
+                return this.notifications.length ? "#" : "/notificaciones";
             }
         }
     }
