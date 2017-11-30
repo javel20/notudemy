@@ -42864,11 +42864,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            notifications: []
+            notifications: [],
+            isDropdownOpen: false
         };
     },
     mounted: function mounted() {
@@ -42881,7 +42884,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         markAsRead: function markAsRead(notification) {
-            axios.patch('/notificaciones/' + notification.id);
+            var _this2 = this;
+
+            axios.patch('/notificaciones/' + notification.id).then(function (res) {
+                _this2.notifications = res.data;
+            });
+        },
+        markAllAsRead: function markAllAsRead() {
+            var _this3 = this;
+
+            this.notifications.forEach(function (notification) {
+                _this3.markAsRead(notification);
+            });
+        }
+    },
+    computed: {
+        dropdownClasses: function dropdownClasses() {
+            return ['dropdown', $this.isDropdownOpen ? 'open' : ''];
+        },
+        linkToNotifications: function linkToNotifications() {
+            return $this.notifications.length ? "#" : "/notificaciones";
         }
     }
 });
@@ -42894,40 +42916,62 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("li", { staticClass: "dropdown" }, [
+  return _c("li", { class: _vm.dropdownClasses }, [
     _c(
       "a",
       {
         staticClass: "dropdown-toogle",
-        attrs: { href: "#", "data-toggle": "dropdown" }
+        attrs: { href: _vm.linkToNotifications, "data-toggle": "dropdown" },
+        on: {
+          click: function($event) {
+            _vm.isDropdownOpen = !_vm.isDropdownOpen
+          }
+        }
       },
       [
         _c("span", { staticClass: "glyphicon glyphicon-bell" }),
         _vm._v(" "),
-        _c("span", {
-          staticClass: "badge",
-          domProps: { textContent: _vm._s(_vm.notifications.length) }
-        })
+        _vm.notifications.length
+          ? _c("span", {
+              staticClass: "badge",
+              domProps: { textContent: _vm._s(_vm.notifications.length) }
+            })
+          : _vm._e()
       ]
     ),
     _vm._v(" "),
-    _c(
-      "ul",
-      { staticClass: "dropdown-menu" },
-      _vm._l(_vm.notifications, function(notification) {
-        return _c("li", [
-          _c("a", {
-            attrs: { href: notification.data.link },
-            domProps: { textContent: _vm._s(notification.data.text) },
-            on: {
-              click: function($event) {
-                _vm.markAsRead(notification)
-              }
-            }
-          })
-        ])
-      })
-    )
+    _vm.notifications.length
+      ? _c(
+          "ul",
+          { staticClass: "dropdown-menu" },
+          [
+            _vm._l(_vm.notifications, function(notification) {
+              return _c("li", [
+                _c("a", {
+                  attrs: { href: notification.data.link },
+                  domProps: { textContent: _vm._s(notification.data.text) },
+                  on: {
+                    click: function($event) {
+                      _vm.markAsRead(notification)
+                    }
+                  }
+                })
+              ])
+            }),
+            _vm._v(" "),
+            _c("li", { staticClass: "divider" }),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                { attrs: { href: "#" }, on: { click: _vm.markAllAsRead } },
+                [_vm._v("Marcar todo como leído")]
+              )
+            ])
+          ],
+          2
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
