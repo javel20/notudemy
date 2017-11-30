@@ -16,6 +16,11 @@ class NotificationsController extends Controller
 
     public function index(){
 
+        if(request()->ajax()){
+
+            return auth()->user()->unreadNotifications;
+        }
+
         return view('notifications.index',[
             'unreadNotifications' => auth()->user()->unreadNotifications,
             'readNotifications' => auth()->user()->readNotifications,

@@ -50,13 +50,9 @@
 
                         <li><a href="{{ route('messages.create') }}">Enviar mensaje</a></li>
 
-                        <li><a href="{{ route('notifications.index')}}">Notificaciones
-                        
-                                @if($count = Auth::user()->unreadNotifications->count())
-                                    <span class="badge">{{ $count }}</span>
-                                @endif
 
-                        </a></li>
+                        <notifications></notifications>
+                        
 
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
@@ -83,14 +79,15 @@
             </div>
         </nav>
 
-        @yield('content')
-    </div>
-
     @if(session()->has('flash'))
         <div class="container">
             <div class="alert alert-sucess">{{ session('flash') }}</div>
         </div>
     @endif
+        
+        @yield('content')
+    </div>
+
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>

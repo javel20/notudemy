@@ -14,7 +14,7 @@
                                 <a href="{{ $unreadNotification->data['link'] }}">
                                     {{ $unreadNotification->data['text'] }}
                                 </a>
-                                <form  class ="pull-right" method="POST" action="{{ route('notifications.read', $unreadNotification->id)}}">
+                                <form method="POST" action="{{ route('notifications.read', $unreadNotification->id)}}" class ="pull-right">
                                     {{ method_field('PATCH') }}
                                     {{ csrf_field() }}
                                     <button class="btn btn-danger btn-xs">x</button>
